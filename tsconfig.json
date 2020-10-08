@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "lib": [
+        "es2019",
+        "dom"
+      ],
+      "outDir": "./dist",
+      "moduleResolution": "node",
+      "declaration": false,
+      "noImplicitAny": false,
+      "sourceMap": false,
+      "types": [ "node", "jest"],
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": false,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "downlevelIteration": true,    
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "./test",
+      "./dist",
+      "./dist-test"
+    ]
+  }

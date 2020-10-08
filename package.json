@@ -1,0 +1,31 @@
+{
+  "name": "ga-protocol",
+  "version": "1.0.0",
+  "description": "Wrapper of Google Analytics Measurement Protocol to easily send pageviews and events to GA",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc && node dist/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinusMelb/GA-protocol.git"
+  },
+  "author": "XU PENG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LinusMelb/GA-protocol/issues"
+  },
+  "homepage": "https://github.com/LinusMelb/GA-protocol#readme",
+  "dependencies": {
+    "@types/node": "^14.11.5",
+    "@types/node-fetch": "^2.5.7",
+    "node-fetch": "^2.6.1",
+    "urlcat": "^2.0.4"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.3",
+    "jest": "^26.5.2",
+    "ts-jest": "^26.4.1"
+  }
+}
