@@ -1,10 +1,11 @@
 {
   "name": "@linusmelb/ga-protocol",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0",
   "description": "Wrapper of Google Analytics Measurement Protocol to easily send pageviews and events to GA",
   "main": "dist/index.js",
+  "typings": "index.d.ts",
   "scripts": {
-    "dev": "tsc && node dist/index.js",
+    "example": "tsc examples/index.ts --outDir dist --AllowJs --checkJs && node dist/examples/index.js",
     "test": "jest"
   },
   "repository": {
@@ -19,8 +20,7 @@
   "homepage": "https://github.com/LinusMelb/GA-protocol#readme",
   "dependencies": {
     "@types/node": "^14.11.5",
-    "@types/node-fetch": "^2.5.7",
-    "node-fetch": "^2.6.1",
+    "axios": "^0.20.0",
     "urlcat": "^2.0.4"
   },
   "devDependencies": {

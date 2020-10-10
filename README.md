@@ -1,4 +1,4 @@
-## GA-protocol - Wrapper of Google Analytics Measurement Protocol
+## GA-protocol - Javascript Wrapper of Google Analytics Measurement Protocol
 [![forthebadge made-with-typescript](https://badgen.net/badge/Made%20with/Typescript/yellow)](https://www.typescriptlang.org/)
 [![forthebadge contribution-is-welcome](https://badgen.net/badge/Contribution%20is/Welcome/green)](https://github.com/LinusMelb/GA-protocol)
 
@@ -9,24 +9,34 @@ For some hybrid apps(e.g uni-app), it's difficult to use native Google Analytics
 npm install @linusmelb/ga-protocol
 
 # Example usage
+
+import { GA } from '@linusmelb/ga-protocol';
 const ga = new GA('UA-XXXXXXXXX-X');
 
-// Pageview
+# Optinal
+# Default user-agent: ga-protocol/1.0.0
+# Default client-id: 0. It should be a random UUID (version 4) as described in http://www.ietf.org/rfc/rfc4122.txt
+ga.setUserAgent('ga-protocol/1.0.0'); # Optinal. 
+ga.setClientId('123e4567-e89b-12d3-a456-426655440000');    
+
+# Pageview 
+# To debug, go to https://analytics.google.com/analytics/web -> realtime -> Content
 await ga.pageView({
-  dh: 'http://localhost', // Document Hostname.
-  dp: '/index',           // Page.
-  dt: 'Hello World',      // Title.
+    hostname: 'http://localhost',
+    pagePath: '/index',
+    pageTitle: 'Hello World',
 });
 
-// Event
+# Event 
+# To debug, go to https://analytics.google.com/analytics/web -> realtime -> Events
 await ga.event({
-  dh: 'http://localhost', // Document Hostname.
-  dp: '/index',           // Page.
-  dt: 'Hello World',      // Title.
-  ec: 'ga-event',         // Event Category.
-  ea: 'click',            // Event Action. 
-  el: 'test event',       // Event label.
-  ev: 0                   // Event value.
+    hostname: 'http://localhost',
+    pagePath: '/index',
+    pageTitle: 'Hello World',
+    eventCategory: 'ga-event',
+    eventAction: 'click',
+    eventLabel: 'test event',
+    eventValue: 0
 });
 ```
 

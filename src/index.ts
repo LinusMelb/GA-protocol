@@ -1,32 +1,28 @@
 
 import urlcat from 'urlcat';
-import fetch from 'node-fetch';
+import {gaParameterRef}  from './gaParamMap';
+const axios = require('axios').default;
 
 interface PageViewParam {
-    dh           : String;  // Document Hostname.
-    dp           : String;  // Page.
-    dt           : String;  // Title.
+    hostname : String;  // Document Hostname.
+    pagePath : String;  // Page Path.
+    pageTitle: String;  // Title.
 }
 
 interface EventParam {
-    dh           : String;  // Document Hostname.
-    dp           : String;  // Page.
-    dt           : String;  // Title.
-    ec           : String;  // Event Category.
-    ea           : String;  // Event Action. 
-    el?          : String;  // Event label.
-    ev?          : Number;  // Event value.
+    hostname     : String;  // Document Hostname.
+    pagePath     : String;  // Page Path.
+    pageTitle    : String;  // Title.
+    eventCategory: String;  // Event Category.
+    eventAction  : String;  // Event Action. 
+    eventLabel?  : String;  // Event label.
+    eventValue?  : Number;  // Event value.
 }
-
-enum paramType {
-    EventParam,
-    PageViewParam
-};
 
 type hitType = 'event' | 'pageview';
 
 const DEFAULT_CLIENT_ID  = 0;
-const DEFAULT_USER_AGENT = 'PostmanRuntime/7.26.5';
+const DEFAULT_USER_AGENT = 'ga-protocol/1.0.0' as const;
 const DEFAULT_VERSION    = 1;
 const GA_BASE_URL        = "https://www.google-analytics.com/collect";
 const HIT_TYPE           = {
@@ -36,26 +32,24 @@ const HIT_TYPE           = {
 
 export class GA {
 
-    protected _userAgent;
-    protected _clientId;
-    protected _propertyId;
-    protected _version;
+    protected _userAgent : String = DEFAULT_USER_AGENT;
+    protected _clientId  : String; // This pseudonymously identifies a particular user, device, or browser instance
+    protected _propertyId: String;
+    protected _version   : Number;
 
     protected _header = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'User-Agent': DEFAULT_USER_AGENT,
     }
 
     constructor(propertyId: String) {
         this._propertyId = propertyId;
     }
 
-    setUserAgent(userAgent) {
-        this._header['User-Agent'] = userAgent;
+    setUserAgent(userAgent: String) {
+        this._userAgent = userAgent;
     }
 
-    setClientId(clientId: Number) {
+    setClientId(clientId: String) {
         this._clientId = clientId;
     }
 
@@ -68,15 +62,25 @@ export class GA {
      * @param payload 
      * @param hitType 
      */
-    assemblePayloadWithAccount(payload, hitType: hitType) : String {
-        return Object.assign({}, payload, 
+    assemblePayloadWithProtocol(payload: PageViewParam | EventParam, hitType: hitType) : Object {
+
+        const tempPayload = Object.assign({}, payload, 
             {
-                tid: this._propertyId,
-                cid: !!this._clientId ? this._clientId: DEFAULT_CLIENT_ID,
-                v  : !!this._version ? this._version : DEFAULT_VERSION,
-                t  : hitType,
+                propertyId     : this._propertyId,
+                clientId       : !!this._clientId ? this._clientId: DEFAULT_CLIENT_ID,
+                protocolVersion: !!this._version ? this._version  : DEFAULT_VERSION,
+                hitType        : hitType,
+                userAgent      : this._userAgent,
             }
         );
+
+        let assembledPayLoad = {};
+        for (let key in tempPayload) {
+            if (key in gaParameterRef) {
+                assembledPayLoad[gaParameterRef[key]] = tempPayload[key];
+            }
+        }
+        return assembledPayLoad;
     }
 
     /**
@@ -84,13 +88,13 @@ export class GA {
      * @param payload
      * @param hitType 
      */
-    async hit(payload: paramType, hitType: hitType): Promise<Boolean> {
-        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithAccount(payload, hitType));
-        return fetch(url, {
-            method: "POST",
+    async hit(payload: PageViewParam | EventParam, hitType: hitType): Promise<Boolean> {
+        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithProtocol(payload, hitType));
+        return axios({
+            method: 'post',
+            url: url,
             headers: this._header,
         }).then((res: any) => {
-            console.log(res);
             return res.status === 200;
         })
     }
@@ -100,12 +104,12 @@ export class GA {
      * @param payload 
      */
     async pageView(payload: PageViewParam) : Promise<Boolean> {
-        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithAccount(payload, HIT_TYPE.PAGE_VIEW));
-        return fetch(url, {
-            method: "POST",
+        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithProtocol(payload, HIT_TYPE.PAGE_VIEW));
+        return axios({
+            method: 'post',
+            url: url,
             headers: this._header,
         }).then((res: any) => {
-            console.log(res);
             return res.status === 200;
         })
     }
@@ -115,12 +119,12 @@ export class GA {
      * @param payload 
      */
     async event(payload: EventParam) : Promise<Boolean>  {
-        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithAccount(payload, HIT_TYPE.EVENT));
-        return fetch(url, {
-            method: "POST",
+        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithProtocol(payload, HIT_TYPE.EVENT));
+        return axios({
+            method: 'post',
+            url: url,
             headers: this._header,
         }).then((res: any) => {
-            console.log(res);
             return res.status === 200;
         })
     }

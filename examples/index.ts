@@ -4,23 +4,27 @@ const start = async () => {
 
     const ga = new GA('UA-XXXXXXXXX-X');
 
-    // PageView Hit
-    await ga.pageView({
-        dh: 'http://localhost',
-        dp: '/index',
-        dt: 'Hello World',
+    // Pageview Hit
+    const pageviewRes:any = await ga.pageView({
+        hostname: 'http://localhost',
+        pagePath: '/index',
+        pageTitle: 'Hello World',
     });
 
+    console.log(`Pageview: ${pageviewRes}`);
+
     // Event
-    await ga.event({
-        dh: 'http://localhost',
-        dp: '/index',
-        dt: 'Hello World',
-        ec: 'ga-event',
-        ea: 'click',
-        el: 'test event',
-        ev: 0
+    const eventRes:any = await ga.event({
+        hostname: 'http://localhost',
+        pagePath: '/index',
+        pageTitle: 'Hello World',
+        eventCategory: 'ga-event',
+        eventAction: 'click',
+        eventLabel: 'test event',
+        eventValue: 0
     });
+
+    console.log(`Event: ${eventRes}`);
 }
 
 start();
