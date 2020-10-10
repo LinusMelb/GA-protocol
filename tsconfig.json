@@ -12,13 +12,15 @@
       "noImplicitAny": false,
       "sourceMap": false,
       "types": [ "node", "jest"],
-      "noUnusedLocals": true,
+      "noUnusedLocals": false,
       "noUnusedParameters": true,
       "noImplicitReturns": false,
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "downlevelIteration": true,    
+      "allowJs": true,
+      "checkJs": true
     },
     "include": [
       "src/**/*", "index.d.ts"
