@@ -1,11 +1,11 @@
 {
   "name": "@linusmelb/ga-protocol",
   "version": "1.0.0",
-  "description": "Wrapper of Google Analytics Measurement Protocol to easily send pageviews and events to GA",
+  "description": "Javascript Wrapper of Google Analytics Measurement Protocol to easily send pageviews and events to GA",
   "main": "dist/index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "example": "tsc examples/index.ts --outDir dist --AllowJs --checkJs && node dist/examples/index.js",
+    "example": "tsc examples/index.ts --outDir dist --AllowJs && node dist/examples/index.js",
     "test": "jest"
   },
   "repository": {
@@ -33,10 +33,12 @@
     "test": "test"
   },
   "keywords": [
-    "google",
-    "analytics",
+    "google analytics",
+    "Web tracking",
+    "Hybird app tracking",
     "measurement",
     "protocol",
     "GA"
-  ]
+  ],
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }

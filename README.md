@@ -38,6 +38,37 @@ await ga.event({
     eventLabel: 'test event',
     eventValue: 0
 });
+
+################################
+# To solve: Uni-app 使用axios真机会提示: adapter is not a function
+################################
+# Define your own axios adapter:
+const adapter = (config, resolve, reject) => {
+    uni.request({
+        method: config.method.toUpperCase(),
+        url: config.url,
+        header: config.headers,
+        data: config.data,
+        dataType: config.dataType,
+        responseType: config.responseType,
+        sslVerify: config.sslVerify,
+        success: function (response) {
+            response = {
+                data: response.data,
+                status: response.statusCode,
+                errMsg: response.errMsg,
+                header: response.header,
+                config: config
+            };
+            resolve(response);
+        },
+        fail: function (response) {
+            reject(response);
+        }
+    })
+};
+# Replace default axios adapter with your own handler
+ga.setAxiosAdapter(adapter);
 ```
 
 ## To test locally
