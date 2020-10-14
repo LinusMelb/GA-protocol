@@ -58,6 +58,21 @@ export class GA {
     }
 
     /**
+     * Overwrite axios default adapter with logic that defined by user
+     * 
+     * @param handler 
+     */
+    setAxiosAdapter(handler: Function) {
+        axios.defaults.adapter = function(config) {
+            return new Promise((resolve, reject) => {
+                handler.length !== 3 ? reject(
+                    "Handler must take 3 arguments: [config, resolve, reject]"
+                ) : handler(config, resolve, reject);
+            });
+        }
+    }
+
+    /**
      * Assembles payload with GA propertyId, clientId and API version
      * @param payload 
      * @param hitType 
