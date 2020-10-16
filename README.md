@@ -86,6 +86,6 @@ npm run test
 ## TODO
 - [x] Send pageview
 - [x] Send event
-- [ ] Send pageview with customer dimension 
-- [ ] Send event with customer dimension 
+- [ ] Send pageview with custom dimension 
+- [ ] Send event with custom dimension 
 - [ ] Send enhanced ecommerce event
