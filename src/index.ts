@@ -4,9 +4,10 @@ import {gaParameterRef}  from './gaParamMap';
 const axios = require('axios').default;
 
 interface PageViewParam {
-    hostname : String;  // Document Hostname.
-    pagePath : String;  // Page Path.
-    pageTitle: String;  // Title.
+    hostname     : String;  // Document Hostname.
+    pagePath     : String;  // Page Path.
+    pageTitle    : String;  // Title.
+    [key: string]: String|Number; // Custom Dimensions
 }
 
 interface EventParam {
@@ -17,6 +18,7 @@ interface EventParam {
     eventAction  : String;  // Event Action. 
     eventLabel?  : String;  // Event label.
     eventValue?  : Number;  // Event value.
+    [key: string]: String|Number; // Custom Dimensions
 }
 
 type hitType = 'event' | 'pageview';
@@ -91,8 +93,13 @@ export class GA {
 
         let assembledPayLoad = {};
         for (let key in tempPayload) {
+            // Assembles GA built-in params
             if (key in gaParameterRef) {
                 assembledPayLoad[gaParameterRef[key]] = tempPayload[key];
+            }
+            // Assembles custom dimensions
+            if (!!key.match(/^cd\d{1,3}$/)) {
+                assembledPayLoad[key] = tempPayload[key];
             }
         }
         return assembledPayLoad;

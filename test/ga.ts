@@ -1,4 +1,15 @@
 import { GA } from '../src';
+const axios = require('axios').default;
+
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    console.log(config.url);
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
 
 describe('GA', () => {
 
@@ -9,6 +20,9 @@ describe('GA', () => {
             hostname : 'http://localhost',
             pagePath : '/index',
             pageTitle: 'Hello World',
+            // Example custom dimensions
+            cd1      : 'Android', // e.g. System
+            cd2      : 'English', // e.g. Language
         });
         expect(true).toBe(response);
     });
@@ -21,7 +35,10 @@ describe('GA', () => {
             eventCategory: 'ga-event',
             eventAction  : 'click',
             eventLabel   : 'test event',
-            eventValue   : 0
+            eventValue   : 0,
+            // Example custom dimensions
+            cd1          : 'Android', // e.g. System
+            cd2          : 'English', // e.g. Language
         });
         expect(true).toBe(response);
     });
