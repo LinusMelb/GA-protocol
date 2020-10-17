@@ -3,3 +3,4 @@ node_modules/
 coverage/
 src/index.js
 examples/index.js
+.npmrc

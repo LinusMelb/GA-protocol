@@ -1,6 +1,6 @@
 {
   "name": "@linusmelb/ga-protocol",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Javascript Wrapper of Google Analytics Measurement Protocol to easily send pageviews and events to GA",
   "main": "dist/index.js",
   "typings": "index.d.ts",

@@ -4,45 +4,56 @@
 
 For some hybrid apps(e.g uni-app), it's difficult to use native Google Analytics SDK. This project will help you to construct your data and manually send it to Google Analytics based on the measurement protocol provided by Google. 
 
-## Installation and usage
+## Installation
 ```bash
 npm install @linusmelb/ga-protocol
+```
 
-# Example usage
-
+## Usage 
+```Javascript
+/**
+ *  Example usage
+ */
 import { GA } from '@linusmelb/ga-protocol';
 const ga = new GA('UA-XXXXXXXXX-X');
 
-# Optinal
-# Default user-agent: ga-protocol/1.0.0
-# Default client-id: 0. It should be a random UUID (version 4) as described in http://www.ietf.org/rfc/rfc4122.txt
-ga.setUserAgent('ga-protocol/1.0.0'); # Optinal. 
+// Optinal
+// Default user-agent: ga-protocol/1.0.0
+// Default client-id: 0. It should be a random UUID (version 4) as described in http://www.ietf.org/rfc/rfc4122.txt
+ga.setUserAgent('ga-protocol/1.0.0'); // Optinal. 
 ga.setClientId('123e4567-e89b-12d3-a456-426655440000');    
 
-# Pageview 
-# To debug, go to https://analytics.google.com/analytics/web -> realtime -> Content
+// Pageview 
+// To debug, go to https://analytics.google.com/analytics/web -> realtime -> Content
 await ga.pageView({
-    hostname: 'http://localhost',
-    pagePath: '/index',
+    hostname : 'http://localhost',
+    pagePath : '/index',
     pageTitle: 'Hello World',
+    cd1      : 'Android', // e.g. System
+    cd2      : 'English', // e.g. Language
+    // you can add more custom dimensions below... 
 });
 
-# Event 
-# To debug, go to https://analytics.google.com/analytics/web -> realtime -> Events
+// Event 
+// To debug, go to https://analytics.google.com/analytics/web -> realtime -> Events
 await ga.event({
-    hostname: 'http://localhost',
-    pagePath: '/index',
-    pageTitle: 'Hello World',
+    hostname     : 'http://localhost',
+    pagePath     : '/index',
+    pageTitle    : 'Hello World',
     eventCategory: 'ga-event',
-    eventAction: 'click',
-    eventLabel: 'test event',
-    eventValue: 0
+    eventAction  : 'click',
+    eventLabel   : 'test event',
+    eventValue   : 0,
+    cd1          : 'Android', // e.g. System
+    cd2          : 'English', // e.g. Language
+    // you can add more custom dimensions below... 
 });
 
-################################
-# To solve: Uni-app 使用axios真机会提示: adapter is not a function
-################################
-# Define your own axios adapter:
+/*
+ * To solve: Uni-app使用axios在真机运行时会提示: adapter is not a function
+ * 
+ * You need to define your own axios adapter:
+ */
 const adapter = (config, resolve, reject) => {
     uni.request({
         method: config.method.toUpperCase(),
@@ -86,6 +97,6 @@ npm run test
 ## TODO
 - [x] Send pageview
 - [x] Send event
-- [ ] Send pageview with custom dimension 
-- [ ] Send event with custom dimension 
+- [x] Send pageview with customer dimension 
+- [x] Send event with customer dimension 
 - [ ] Send enhanced ecommerce event
