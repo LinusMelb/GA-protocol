@@ -1,6 +1,4 @@
-const { ModuleResolutionKind } = require("typescript")
-
-const gaParameterRef = {
+export const gaParameterRef = {
     appId          : 'aid',
     appInstallerId : 'aiid',
     appName        : 'an',
@@ -25,9 +23,4 @@ const gaParameterRef = {
     transactionId  : 'ti',
     userAgent      : 'ua',
     userId         : 'uid',
-}
-
-
-module.exports = {
-    gaParameterRef
 }
