@@ -10,7 +10,7 @@ npm install @linusmelb/ga-protocol
 ```
 
 ## Usage 
-```Javascript
+```js
 /**
  *  Example usage
  */
