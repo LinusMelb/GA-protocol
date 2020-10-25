@@ -47,14 +47,22 @@ export class GA {
         this._propertyId = propertyId;
     }
 
-    setUserAgent(userAgent: String) {
+    setUserAgent(userAgent: String): void {
         this._userAgent = userAgent;
     }
 
-    setClientId(clientId: String) {
+    getUserAgent(): String {
+        return this._userAgent;
+    }
+
+    setClientId(clientId: String): void {
         this._clientId = clientId;
     }
 
+    getClientId(): String {
+        return this._clientId;
+    }
+    
     setVersion(version: Number) {
         this._version = version;
     }
