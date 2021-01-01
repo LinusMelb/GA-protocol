@@ -3,6 +3,9 @@ module.exports = {
     testEnvironment: 'node',
     coverageDirectory: 'coverage',
     collectCoverage: true,
+    transform: {
+      '^.+\\.ts?$': 'ts-jest'
+    },
     testMatch: [
       '**/test/**/*.ts'
     ],

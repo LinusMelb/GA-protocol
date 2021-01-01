@@ -14,8 +14,8 @@ branches:
   - /^release-.*/
 
 install:
-  - npm install 
-  
+  - npm i
+
 script:
   - npm run test
 
