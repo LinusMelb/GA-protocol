@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - 'node'
   - '12'
-  - '9'
+  - '9.11.2'
 
 matrix:
   fast_finish: true
@@ -13,11 +13,8 @@ branches:
   - main
   - /^release-.*/
 
-install:
-  - npm i
-
 script:
-  - npm run test
+  - npm test
 
 cache:
   directories:
