@@ -1,5 +1,4 @@
 
-import urlcat from 'urlcat';
 import {gaParameterRef}  from './gaParamMap';
 const axios = require('axios').default;
 
@@ -27,6 +26,7 @@ const DEFAULT_CLIENT_ID  = 0;
 const DEFAULT_USER_AGENT = 'ga-protocol/1.0.0' as const;
 const DEFAULT_VERSION    = 1;
 const GA_BASE_URL        = "https://www.google-analytics.com/collect";
+const GA_DEBUG_URL       = "https://www.google-analytics.com/debug/collect";
 const HIT_TYPE           = {
     PAGE_VIEW: 'pageview',
     EVENT    : 'event'
@@ -113,49 +113,52 @@ export class GA {
         return assembledPayLoad;
     }
 
+    assemblePayloadWithBaseUrl(url: String, assembledPayLoad: Object ): String {
+
+        const qs = Object.keys(assembledPayLoad)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(assembledPayLoad[key])}`)
+        .join('&');
+
+        return `${url}?${qs}`;
+    }
+
     /**
      * Sends a hit that can be either a pageview or an event
      * @param payload
      * @param hitType 
      */
-    async hit(payload: PageViewParam | EventParam, hitType: hitType): Promise<Boolean> {
-        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithProtocol(payload, hitType));
+    async hit(payload: PageViewParam | EventParam, hitType: hitType, isDebug?: Boolean): Promise<Boolean> {
+        const url = this.assemblePayloadWithBaseUrl(isDebug ? GA_DEBUG_URL : GA_BASE_URL, this.assemblePayloadWithProtocol(payload, hitType));
         return axios({
             method: 'post',
             url: url,
             headers: this._header,
-        }).then((res: any) => {
-            return res.status === 200;
-        })
+        });
     }
 
     /**
      * Sends a pageview
      * @param payload 
      */
-    async pageView(payload: PageViewParam) : Promise<Boolean> {
-        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithProtocol(payload, HIT_TYPE.PAGE_VIEW));
+    async pageView(payload: PageViewParam, isDebug?: Boolean) : Promise<Boolean> {
+        const url = this.assemblePayloadWithBaseUrl(isDebug ? GA_DEBUG_URL : GA_BASE_URL, this.assemblePayloadWithProtocol(payload, HIT_TYPE.PAGE_VIEW));
         return axios({
             method: 'post',
             url: url,
             headers: this._header,
-        }).then((res: any) => {
-            return res.status === 200;
-        })
+        });
     }
 
     /**
      * Sends a ga event
      * @param payload 
      */
-    async event(payload: EventParam) : Promise<Boolean>  {
-        const url = urlcat(GA_BASE_URL, this.assemblePayloadWithProtocol(payload, HIT_TYPE.EVENT));
+    async event(payload: EventParam, isDebug?: Boolean) : Promise<Boolean>  {
+        const url = this.assemblePayloadWithBaseUrl(isDebug ? GA_DEBUG_URL : GA_BASE_URL, this.assemblePayloadWithProtocol(payload, HIT_TYPE.EVENT));
         return axios({
             method: 'post',
             url: url,
             headers: this._header,
-        }).then((res: any) => {
-            return res.status === 200;
-        })
+        });
     }
 }

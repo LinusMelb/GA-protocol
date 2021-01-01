@@ -1,8 +1,9 @@
 language: node_js
 
 node_js:
-  - 'node'
+  - '14'
   - '12'
+  - '10'
 
 matrix:
   fast_finish: true
@@ -13,7 +14,7 @@ branches:
   - /^release-.*/
 
 script:
-  - npm run test
+  - npm test
 
 cache:
   directories:
