@@ -1,9 +1,9 @@
 language: node_js
 
 node_js:
-  - 'node'
+  - '14'
   - '12'
-  - '9.11.2'
+  - '10'
 
 matrix:
   fast_finish: true
