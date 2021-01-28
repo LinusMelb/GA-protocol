@@ -1,25 +1,25 @@
 export declare interface PageViewParam {
-    hostname : String;  // Document Hostname.
-    pagePath : String;  // Page Path.
-    pageTitle: String;  // Title.
+    hostname : string;  // Document Hostname.
+    pagePath : string;  // Page Path.
+    pageTitle: string;  // Title.
 }
 
 export declare interface EventParam {
-    hostname     : String;  // Document Hostname.
-    pagePath     : String;  // Page Path.
-    pageTitle    : String;  // Title.
-    eventCategory: String;  // Event Category.
-    eventAction  : String;  // Event Action. 
-    eventLabel?  : String;  // Event label.
-    eventValue?  : Number;  // Event value.
+    hostname     : string;  // Document Hostname.
+    pagePath     : string;  // Page Path.
+    pageTitle    : string;  // Title.
+    eventCategory: string;  // Event Category.
+    eventAction  : string;  // Event Action. 
+    eventLabel?  : string;  // Event label.
+    eventValue?  : number;  // Event value.
 }
 
 export declare type hitType = 'event' | 'pageview';
 
 export declare class GA {
     constructor(propertyId: String);
-    setClientId(clientId: Number): void;
-    setVersion(version: Number): void;
+    setClientId(clientId: number): void;
+    setVersion(version: number): void;
     assemblePayloadWithAccount(payload: PageViewParam | EventParam, hitType: hitType) : String;
     hit(payload: PageViewParam | EventParam, hitType: hitType): Promise<Boolean>;
     pageView(payload: PageViewParam) : Promise<Boolean>;

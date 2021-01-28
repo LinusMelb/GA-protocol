@@ -3,21 +3,21 @@ import {gaParameterRef}  from './gaParamMap';
 const axios = require('axios').default;
 
 interface PageViewParam {
-    hostname     : String;  // Document Hostname.
-    pagePath     : String;  // Page Path.
-    pageTitle    : String;  // Title.
-    [key: string]: String|Number; // Custom Dimensions
+    hostname     : string;  // Document Hostname.
+    pagePath     : string;  // Page Path.
+    pageTitle    : string;  // Title.
+    [key: string]: string|number; // Custom Dimensions
 }
 
 interface EventParam {
-    hostname     : String;  // Document Hostname.
-    pagePath     : String;  // Page Path.
-    pageTitle    : String;  // Title.
-    eventCategory: String;  // Event Category.
-    eventAction  : String;  // Event Action. 
-    eventLabel?  : String;  // Event label.
-    eventValue?  : Number;  // Event value.
-    [key: string]: String|Number; // Custom Dimensions
+    hostname     : string;  // Document Hostname.
+    pagePath     : string;  // Page Path.
+    pageTitle    : string;  // Title.
+    eventCategory: string;  // Event Category.
+    eventAction  : string;  // Event Action. 
+    eventLabel?  : string;  // Event label.
+    eventValue?  : number;  // Event value.
+    [key: string]: string|number; // Custom Dimensions
 }
 
 type hitType = 'event' | 'pageview';
@@ -34,36 +34,36 @@ const HIT_TYPE           = {
 
 export class GA {
 
-    protected _userAgent : String = DEFAULT_USER_AGENT;
-    protected _clientId  : String; // This pseudonymously identifies a particular user, device, or browser instance
-    protected _propertyId: String;
-    protected _version   : Number;
+    protected _userAgent : string = DEFAULT_USER_AGENT;
+    protected _clientId  : string; // This pseudonymously identifies a particular user, device, or browser instance
+    protected _propertyId: string;
+    protected _version   : number;
 
     protected _header = {
         'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    constructor(propertyId: String) {
+    constructor(propertyId: string) {
         this._propertyId = propertyId;
     }
 
-    setUserAgent(userAgent: String): void {
+    setUserAgent(userAgent: string): void {
         this._userAgent = userAgent;
     }
 
-    getUserAgent(): String {
+    getUserAgent(): string {
         return this._userAgent;
     }
 
-    setClientId(clientId: String): void {
+    setClientId(clientId: string): void {
         this._clientId = clientId;
     }
 
-    getClientId(): String {
+    getClientId(): string {
         return this._clientId;
     }
     
-    setVersion(version: Number) {
+    setVersion(version: number) {
         this._version = version;
     }
 
@@ -113,7 +113,7 @@ export class GA {
         return assembledPayLoad;
     }
 
-    assemblePayloadWithBaseUrl(url: String, assembledPayLoad: Object ): String {
+    assemblePayloadWithBaseUrl(url: string, assembledPayLoad: Object ): string {
 
         const qs = Object.keys(assembledPayLoad)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(assembledPayLoad[key])}`)
