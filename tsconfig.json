@@ -2,10 +2,6 @@
     "compilerOptions": {
       "target": "es5",
       "module": "commonjs",
-      "lib": [
-        "es2019",
-        "dom"
-      ],
       "outDir": "./dist",
       "moduleResolution": "node",
       "declaration": false,
